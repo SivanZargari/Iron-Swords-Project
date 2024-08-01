@@ -7,7 +7,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [ 
+    dependencies = [
         ('ironSwordsApp', '0004_hero_description'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
