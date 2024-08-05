@@ -2,6 +2,8 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Hero
+from .models import KibbutzStory
+
 
 class CustomAuthenticationForm(AuthenticationForm):
     def confirm_login_allowed(self, user):
@@ -29,4 +31,16 @@ class HeroForm(forms.ModelForm):
         }
         widgets = {
             'image': forms.FileInput()  # Use FileInput for single file uploads
+        }
+
+class KibbutzStoryForm(forms.ModelForm):
+    class Meta:
+        model = KibbutzStory
+        fields = ['title', 'content']
+        labels = {
+            'title': 'הכותרת',
+            'content': 'התוכן',
+        }
+        widgets = {
+            'content': forms.Textarea(attrs={'rows': 5}),
         }

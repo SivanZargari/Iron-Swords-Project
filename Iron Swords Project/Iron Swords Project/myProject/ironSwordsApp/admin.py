@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Hero
+from .models import Hero, KibbutzStory
 from django.utils.html import format_html
 
 class HeroAdmin(admin.ModelAdmin):
@@ -13,3 +13,43 @@ class HeroAdmin(admin.ModelAdmin):
     image_tag.short_description = 'Image'
 
 admin.site.register(Hero, HeroAdmin)
+
+
+class KibbutzStoryAdmin(admin.ModelAdmin):
+    list_display = ('title', 'author', 'created_at', 'short_content')
+    search_fields = ('title', 'content', 'author__username')
+    list_filter = ('author', 'created_at')
+
+    def short_content(self, obj):
+        return obj.content[:100] + '...' if len(obj.content) > 100 else obj.content
+
+    short_content.short_description = 'Content'
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        # Show all stories to admins
+        if request.user.is_superuser:
+            return qs
+        # Show only stories created by the user for non-admins
+        return qs.filter(author=request.user)
+
+    def save_model(self, request, obj, form, change):
+        if not change:  # New object
+            obj.author = request.user
+        super().save_model(request, obj, form, change)
+
+    def has_change_permission(self, request, obj=None):
+        if request.user.is_superuser:
+            return True
+        if obj is not None:
+            return obj.author == request.user
+        return super().has_change_permission(request, obj)
+
+    def has_delete_permission(self, request, obj=None):
+        if request.user.is_superuser:
+            return True
+        if obj is not None:
+            return obj.author == request.user
+        return super().has_delete_permission(request, obj)
+
+admin.site.register(KibbutzStory, KibbutzStoryAdmin)

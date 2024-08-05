@@ -10,6 +10,13 @@ from .forms import HeroForm
 from .models import Hero
 from django.contrib.auth import get_user_model
 from django.views.generic import ListView
+from .models import KibbutzStory
+from .forms import KibbutzStoryForm
+from django.contrib.auth.decorators import user_passes_test
+from django.urls import reverse
+
+
+
 
 
 User = get_user_model()
@@ -220,6 +227,51 @@ def hero_detail(request, hero_id):
     return render(request, 'hero_detail.html', {'hero': hero})
 
 
+def kibbutz_stories(request):
+    stories = KibbutzStory.objects.all()
+    return render(request, 'kibbutz_stories.html', {'kibbutz_stories': stories})
 
+@login_required
+def add_kibbutz_story(request):
+    if request.method == 'POST':
+        form = KibbutzStoryForm(request.POST)
+        if form.is_valid():
+            story = form.save(commit=False)
+            story.author = request.user
+            story.save()
+            return redirect('kibbutz_stories')
+    else:
+        form = KibbutzStoryForm()
+    return render(request, 'add_kibbutz_story.html', {'form': form})
+
+
+@login_required
+def update_kibbutz_story(request, story_id):
+    story = get_object_or_404(KibbutzStory, id=story_id)
+    if request.user != story.author and not request.user.is_superuser:
+        return redirect('kibbutz_stories')
+    
+    if request.method == 'POST':
+        form = KibbutzStoryForm(request.POST, instance=story)
+        if form.is_valid():
+            form.save()
+            return redirect('kibbutz_stories')
+    else:
+        form = KibbutzStoryForm(instance=story)
+    
+    return render(request, 'update_kibbutz_story.html', {'form': form})
+
+
+@login_required
+def delete_kibbutz_story(request, story_id):
+    story = get_object_or_404(KibbutzStory, id=story_id)
+    if request.user != story.author and not request.user.is_superuser:
+        return redirect('kibbutz_stories')
+    
+    if request.method == 'POST':
+        story.delete()
+        return redirect('kibbutz_stories')
+    
+    return render(request, 'confirm_delete_story.html', {'story': story})
 
 

@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 from django.contrib.auth.views import LogoutView
 from .views import HeroListView
+from .views import kibbutz_stories, add_kibbutz_story, update_kibbutz_story, delete_kibbutz_story
 
 
 urlpatterns = [
@@ -20,7 +21,14 @@ urlpatterns = [
     path('join_form/', views.join_form, name='join_form'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('heroes/', HeroListView.as_view(), name='hero_list'),
-    
+
+    path('transition/', views.transition, name='transition'),
+    path('kibbutz_stories/', kibbutz_stories, name='kibbutz_stories'),
+    path('add_kibbutz_story/', add_kibbutz_story, name='add_kibbutz_story'),
+    path('delete_kibbutz_story/<int:story_id>/', delete_kibbutz_story, name='delete_kibbutz_story'),
+    path('update_kibbutz_story/<int:story_id>/', update_kibbutz_story, name='update_kibbutz_story'),
+
+
 
     # Class-based views
     path('hero/new/', views.HeroCreateView.as_view(), name='hero-create'),
