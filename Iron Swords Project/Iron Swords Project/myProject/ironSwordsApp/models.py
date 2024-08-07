@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.conf import settings
+from django.contrib import admin
 
 # Create your models here.
 # ironSwordsApp/models.py
@@ -27,3 +27,19 @@ class KibbutzStory(models.Model):
 
     def __str__(self):
         return self.title
+    
+class NovaPartyTestimony(models.Model):
+    owner = models.CharField(max_length=100)
+    story = models.TextField()
+
+
+    def __str__(self):
+        return self.owner
+    
+class Testimonial(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    story = models.TextField()
+
+    def __str__(self):
+        return self.author.username
+    

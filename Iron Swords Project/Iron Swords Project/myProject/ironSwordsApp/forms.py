@@ -2,7 +2,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Hero
-from .models import KibbutzStory
+from .models import KibbutzStory, NovaPartyTestimony, Testimonial
 
 
 class CustomAuthenticationForm(AuthenticationForm):
@@ -44,3 +44,28 @@ class KibbutzStoryForm(forms.ModelForm):
         widgets = {
             'content': forms.Textarea(attrs={'rows': 5}),
         }
+
+class NovaPartyTestimonyForm(forms.ModelForm):
+    class Meta:
+        model = NovaPartyTestimony
+        fields = ['owner', 'story']
+        labels = {
+            'owner': 'בעל העדות',
+            'story': 'סיפור העדות ממסיבת הנובה',
+        }
+        widgets = {
+            'story': forms.Textarea(attrs={'rows': 5}),
+        }
+
+class TestimonialForm(forms.ModelForm):
+    class Meta:
+        model = Testimonial
+        fields = ['author', 'story']
+        labels = {
+            'author': 'מחבר',
+            'story': 'סיפור',
+        }
+        widgets = {
+            'story': forms.Textarea(attrs={'rows': 5}),
+        }
+

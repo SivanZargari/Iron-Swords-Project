@@ -3,6 +3,8 @@ from . import views
 from django.contrib.auth.views import LogoutView
 from .views import HeroListView
 from .views import kibbutz_stories, add_kibbutz_story, update_kibbutz_story, delete_kibbutz_story
+from .views import add_nova_party_testimony, update_testimonial, delete_nova_party_testimony
+
 
 
 urlpatterns = [
@@ -28,7 +30,11 @@ urlpatterns = [
     path('delete_kibbutz_story/<int:story_id>/', delete_kibbutz_story, name='delete_kibbutz_story'),
     path('update_kibbutz_story/<int:story_id>/', update_kibbutz_story, name='update_kibbutz_story'),
 
-
+    path('nova-party-evidence/', views.nova_party_evidence, name='nova_party_evidence'),
+    path('add_testimony/', add_nova_party_testimony, name='add_nova_party_testimony'),
+    path('edit_testimony/<int:pk>/', update_testimonial, name='update_testimonial'),
+    path('delete_testimony/<int:testimony_id>/', delete_nova_party_testimony, name='delete_nova_party_testimony'),
+   
 
     # Class-based views
     path('hero/new/', views.HeroCreateView.as_view(), name='hero-create'),

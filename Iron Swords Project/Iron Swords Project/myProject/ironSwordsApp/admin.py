@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .models import Hero, KibbutzStory
+from .models import Hero, KibbutzStory, NovaPartyTestimony
 from django.utils.html import format_html
+
 
 class HeroAdmin(admin.ModelAdmin):
     list_display = ('first_name', 'last_name', 'age', 'hometown', 'country_of_birth', 'hero_story', 'image_tag')
@@ -53,3 +54,11 @@ class KibbutzStoryAdmin(admin.ModelAdmin):
         return super().has_delete_permission(request, obj)
 
 admin.site.register(KibbutzStory, KibbutzStoryAdmin)
+
+
+class NovaPartyTestimonyAdmin(admin.ModelAdmin):
+    list_display = ('owner', 'story')  # Fields to display in the list view
+    search_fields = ('owner', 'story')  # Fields to be searchable
+
+# Register the model with the admin site
+admin.site.register(NovaPartyTestimony, NovaPartyTestimonyAdmin)

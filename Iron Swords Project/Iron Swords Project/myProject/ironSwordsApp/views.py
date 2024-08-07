@@ -6,16 +6,11 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .forms import HeroForm
-from .models import Hero
+from .forms import HeroForm, NovaPartyTestimonyForm, KibbutzStoryForm, TestimonialForm
+from .models import Hero, NovaPartyTestimony, KibbutzStory, Testimonial
 from django.contrib.auth import get_user_model
 from django.views.generic import ListView
-from .models import KibbutzStory
-from .forms import KibbutzStoryForm
-from django.contrib.auth.decorators import user_passes_test
-from django.urls import reverse
-
-
+from django.http import HttpResponseForbidden
 
 
 
@@ -275,3 +270,48 @@ def delete_kibbutz_story(request, story_id):
     return render(request, 'confirm_delete_story.html', {'story': story})
 
 
+def nova_party_evidence(request):
+    testimonies = NovaPartyTestimony.objects.all()
+    return render(request, 'nova_party_evidence.html', {'testimonies': testimonies})
+
+
+def add_nova_party_testimony(request):
+    if request.method == 'POST':
+        form = NovaPartyTestimonyForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('nova_party_evidence')  # Redirect to the testimonies page
+    else:
+        form = NovaPartyTestimonyForm()
+
+    return render(request, 'add_nova_party_testimony.html', {'form': form})
+
+
+
+@login_required
+def update_testimonial(request, pk):
+    testimonial = get_object_or_404(NovaPartyTestimony, id=pk)  # Changed to NovaPartyTestimony
+    # Check if the user is the author or an admin
+    if request.user != testimonial.author and not request.user.is_superuser:
+        return HttpResponseForbidden("You do not have permission to edit this testimonial.")
+    if request.method == "POST":
+        form = NovaPartyTestimonyForm(request.POST, instance=testimonial)  # Changed to NovaPartyTestimonyForm
+        if form.is_valid():
+            form.save()
+            return redirect('nova_party_testimonies')
+    else:
+        form = NovaPartyTestimonyForm(instance=testimonial)  # Changed to NovaPartyTestimonyForm
+    return render(request, 'update_testimonial.html', {'form': form})
+
+
+
+
+@login_required
+def delete_nova_party_testimony(request, testimony_id):
+    testimony = get_object_or_404(NovaPartyTestimony, id=testimony_id)
+    if request.user != testimony.author and not request.user.is_superuser:
+        return HttpResponseForbidden("You do not have permission to delete this testimonial.")
+    if request.method == "GET" and request.GET.get('confirm') == 'yes':
+        testimony.delete()
+        return redirect('nova_party_testimonies')
+    return render(request, 'confirm_delete_nova_party_testimony.html', {'testimony': testimony})
