@@ -1,12 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.contrib import admin
 
 # Create your models here.
 # ironSwordsApp/models.py
 
 class Hero(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     age = models.IntegerField()
@@ -21,7 +20,7 @@ class Hero(models.Model):
 class KibbutzStory(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -37,9 +36,8 @@ class NovaPartyTestimony(models.Model):
         return self.owner
     
 class Testimonial(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     story = models.TextField()
 
     def __str__(self):
         return self.author.username
-    

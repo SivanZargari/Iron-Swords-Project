@@ -41,16 +41,16 @@ def transition(request):
 
 def login_view(request):
     if request.method == 'POST':
-        print("login view submitted")
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('join_form')
+            return redirect('join_form')  # Ensure 'join_form' URL name is correct
         else:
             messages.error(request, "Invalid credentials")
     else:
         form = AuthenticationForm()
+    
     return render(request, 'login.html', {'form': form})
 
 
@@ -178,7 +178,6 @@ def hero_detail(request, hero_id):
     return render(request, 'hero_detail.html', {'hero': hero})
 
 
-
 class HeroCreateView(LoginRequiredMixin, CreateView):
     model = Hero
     fields = ['first_name', 'last_name', 'age', 'hometown', 'country_of_birth', 'hero_story']
@@ -215,11 +214,6 @@ def transition(request):
 class HeroListView(ListView):
     model = Hero
     template_name = 'hero_list.html'
-
-
-def hero_detail(request, hero_id):
-    hero = get_object_or_404(Hero, id=hero_id)
-    return render(request, 'hero_detail.html', {'hero': hero})
 
 
 def kibbutz_stories(request):
@@ -315,3 +309,9 @@ def delete_nova_party_testimony(request, testimony_id):
         testimony.delete()
         return redirect('nova_party_testimonies')
     return render(request, 'confirm_delete_nova_party_testimony.html', {'testimony': testimony})
+
+
+def zaka_people(request):
+    # Add any context or data retrieval here if needed
+    return render(request, 'zaka_people.html')
+

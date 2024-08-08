@@ -35,11 +35,13 @@ urlpatterns = [
     path('edit_testimony/<int:pk>/', update_testimonial, name='update_testimonial'),
     path('delete_testimony/<int:testimony_id>/', delete_nova_party_testimony, name='delete_nova_party_testimony'),
    
+    path('zaka_people/', views.zaka_people, name='zaka_people'),
+
 
     # Class-based views
     path('hero/new/', views.HeroCreateView.as_view(), name='hero-create'),
     path('hero/<int:pk>/edit/', views.HeroUpdateView.as_view(), name='hero-update'),
     path('hero/<int:pk>/delete/', views.HeroDeleteView.as_view(), name='hero-delete'),
     path('hero/<int:hero_id>/', views.hero_detail, name='hero_detail'),
-]
-
+    
+    ]
