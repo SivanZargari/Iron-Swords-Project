@@ -93,11 +93,12 @@
             display: none;
         }
     </style>
+</style>
 </head>
 <body>
     <div class="container">
         <h1>הוסף עדות חטוף ששוחרר משבי חמאס</h1>
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group">
                 {{ form.owner.label_tag }}
@@ -114,6 +115,10 @@
             <div class="form-group">
                 {{ form.date_of_return.label_tag }}
                 {{ form.date_of_return }}
+            </div>
+            <div class="form-group">
+                {{ form.image.label_tag }} <!-- Label for the image field -->
+                {{ form.image }} <!-- Image input field -->
             </div>
             <div class="form-group">
                 <button type="submit">שלח</button>

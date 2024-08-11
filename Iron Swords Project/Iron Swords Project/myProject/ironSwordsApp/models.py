@@ -50,6 +50,8 @@ class AbducteeTestimony(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     age = models.IntegerField()
     date_of_return = models.DateField()
+    image = models.ImageField(upload_to='abductee_testimonies/', null=True, blank=True)  # Make sure this line exists
+
 
     def __str__(self):
         return self.owner

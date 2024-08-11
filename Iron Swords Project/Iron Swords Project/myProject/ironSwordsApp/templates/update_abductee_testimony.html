@@ -66,10 +66,30 @@
 <body>
     <div class="container">
         <h1>עדכון עדות חטוף ששוחרר משבי חמאס</h1>
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group">
-                {{ form.as_p }}
+                <label>תמונת החטוף</label>
+                {% if form.instance.image %}
+                    <img src="{{ form.instance.image.url }}" alt="תמונת החטוף" style="max-width: 150px; margin-bottom: 10px;">
+                {% endif %}
+                {{ form.image }} <!-- Image upload field -->
+            </div>
+            <div class="form-group">
+                {{ form.owner.label_tag }}
+                {{ form.owner }}
+            </div>
+            <div class="form-group">
+                {{ form.story.label_tag }}
+                {{ form.story }}
+            </div>
+            <div class="form-group">
+                {{ form.age.label_tag }}
+                {{ form.age }}
+            </div>
+            <div class="form-group">
+                {{ form.date_of_return.label_tag }}
+                {{ form.date_of_return }}
             </div>
             <button type="submit">עדכון עדות</button>
         </form>

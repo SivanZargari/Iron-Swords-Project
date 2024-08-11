@@ -365,3 +365,7 @@ def delete_abductee_testimony(request, testimony_id):
         return redirect('testimonies-abductees')
     
     return render(request, 'confirm_deletion.html', {'testimony': testimony})
+
+def abductee_details(request, id):
+    testimony = get_object_or_404(AbducteeTestimony, id=id)
+    return render(request, 'abductee_details.html', {'testimony': testimony})

@@ -5,6 +5,7 @@ from .views import HeroListView
 from .views import kibbutz_stories, add_kibbutz_story, update_kibbutz_story, delete_kibbutz_story
 from .views import add_nova_party_testimony, update_testimonial, delete_nova_party_testimony
 from .views import testimonies_abductees, add_abductee_testimony, update_abductee_testimony, delete_abductee_testimony
+from .views import abductee_details
 
 
 
@@ -42,6 +43,8 @@ urlpatterns = [
     path('add-abductee-testimony/', add_abductee_testimony, name='add_abductee_testimony'),
     path('update-abductee-testimony/<int:testimony_id>/', update_abductee_testimony, name='update_abductee_testimony'),
     path('delete-abductee-testimony/<int:testimony_id>/', delete_abductee_testimony, name='delete_abductee_testimony'),
+
+    path('abductee/<int:id>/', abductee_details, name='abductee_details'),
 
     # Class-based views
     path('hero/new/', views.HeroCreateView.as_view(), name='hero-create'),

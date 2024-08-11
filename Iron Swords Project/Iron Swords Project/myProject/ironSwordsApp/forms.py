@@ -72,10 +72,11 @@ class TestimonialForm(forms.ModelForm):
 class AbducteeTestimonyForm(forms.ModelForm):
     class Meta:
         model = AbducteeTestimony
-        fields = ['owner', 'story', 'age', 'date_of_return']
+        fields = ['owner', 'story', 'age', 'date_of_return', 'image']
     owner = forms.CharField(label="שם החטוף המשוחרר", max_length=100)
     story = forms.CharField(label="מידע על אירועי השבי", widget=forms.Textarea)
     age = forms.IntegerField(label="גיל החטוף המשוחרר", required=True)
     date_of_return = forms.DateField(label="תאריך חזרה משבי", widget=forms.SelectDateWidget(years=range(1900, 2100)))
-        
+    image = forms.ImageField(label="תמונת החטוף ", required=False)
+
 
