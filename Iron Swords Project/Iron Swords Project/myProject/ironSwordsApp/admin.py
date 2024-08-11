@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .models import Hero, KibbutzStory, NovaPartyTestimony
+from .models import Hero, KibbutzStory, NovaPartyTestimony, AbducteeTestimony
 from django.utils.html import format_html
+
 
 
 class HeroAdmin(admin.ModelAdmin):
@@ -62,3 +63,8 @@ class NovaPartyTestimonyAdmin(admin.ModelAdmin):
 
 # Register the model with the admin site
 admin.site.register(NovaPartyTestimony, NovaPartyTestimonyAdmin)
+
+
+@admin.register(AbducteeTestimony)
+class AbducteeTestimonyAdmin(admin.ModelAdmin):
+    list_display = ('owner', 'story', 'author', 'created_at')

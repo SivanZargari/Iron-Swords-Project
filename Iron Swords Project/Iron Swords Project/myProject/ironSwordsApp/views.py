@@ -6,12 +6,14 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .forms import HeroForm, NovaPartyTestimonyForm, KibbutzStoryForm, TestimonialForm
-from .models import Hero, NovaPartyTestimony, KibbutzStory, Testimonial
+from .forms import HeroForm, NovaPartyTestimonyForm, KibbutzStoryForm, TestimonialForm, AbducteeTestimonyForm
+from .models import Hero, NovaPartyTestimony, KibbutzStory, Testimonial, AbducteeTestimony
 from django.contrib.auth import get_user_model
 from django.views.generic import ListView
 from django.http import HttpResponseForbidden
-
+from .models import AbducteeTestimony
+from .forms import AbducteeTestimonyForm
+from django.core.exceptions import PermissionDenied
 
 
 User = get_user_model()
@@ -315,3 +317,51 @@ def zaka_people(request):
     # Add any context or data retrieval here if needed
     return render(request, 'zaka_people.html')
 
+
+def testimonies_abductees(request):
+    testimonies = AbducteeTestimony.objects.all()
+    return render(request, 'testimonies_abductees.html', {'testimonies': testimonies})
+
+@login_required
+def add_abductee_testimony(request):
+    if request.method == 'POST':
+        form = AbducteeTestimonyForm(request.POST)
+        if form.is_valid():
+            AbducteeTestimony.objects.create(
+                owner=form.cleaned_data['owner'],
+                story=form.cleaned_data['story'],
+                author=request.user,
+                age=form.cleaned_data['age'],
+                date_of_return=form.cleaned_data['date_of_return']
+            )
+            return redirect('testimonies-abductees')
+    else:
+        form = AbducteeTestimonyForm()
+    return render(request, 'add_abductee_testimony.html', {'form': form})
+
+@login_required
+def update_abductee_testimony(request, testimony_id):
+    testimony = get_object_or_404(AbducteeTestimony, pk=testimony_id)
+    
+    if request.method == 'POST':
+        form = AbducteeTestimonyForm(request.POST, instance=testimony)
+        if form.is_valid():
+            form.save()
+            return redirect('testimonies-abductees')
+    else:
+        form = AbducteeTestimonyForm(instance=testimony)
+
+    return render(request, 'update_abductee_testimony.html', {'form': form})
+
+@login_required
+def delete_abductee_testimony(request, testimony_id):
+    testimony = get_object_or_404(AbducteeTestimony, id=testimony_id)
+    
+    if request.user != testimony.author and not request.user.is_superuser:
+        raise PermissionDenied
+    
+    if request.method == 'POST':
+        testimony.delete()
+        return redirect('testimonies-abductees')
+    
+    return render(request, 'confirm_deletion.html', {'testimony': testimony})

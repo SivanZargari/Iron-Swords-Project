@@ -2,8 +2,8 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Hero
-from .models import KibbutzStory, NovaPartyTestimony, Testimonial
-
+from .models import KibbutzStory, NovaPartyTestimony, Testimonial, AbducteeTestimony
+from django.contrib.auth.models import User
 
 class CustomAuthenticationForm(AuthenticationForm):
     def confirm_login_allowed(self, user):
@@ -68,4 +68,14 @@ class TestimonialForm(forms.ModelForm):
         widgets = {
             'story': forms.Textarea(attrs={'rows': 5}),
         }
+
+class AbducteeTestimonyForm(forms.ModelForm):
+    class Meta:
+        model = AbducteeTestimony
+        fields = ['owner', 'story', 'age', 'date_of_return']
+    owner = forms.CharField(label="שם החטוף המשוחרר", max_length=100)
+    story = forms.CharField(label="מידע על אירועי השבי", widget=forms.Textarea)
+    age = forms.IntegerField(label="גיל החטוף המשוחרר", required=True)
+    date_of_return = forms.DateField(label="תאריך חזרה משבי", widget=forms.SelectDateWidget(years=range(1900, 2100)))
+        
 

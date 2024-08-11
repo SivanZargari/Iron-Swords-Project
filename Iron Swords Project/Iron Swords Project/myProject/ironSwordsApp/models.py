@@ -41,3 +41,15 @@ class Testimonial(models.Model):
 
     def __str__(self):
         return self.author.username
+    
+
+class AbducteeTestimony(models.Model):
+    owner = models.CharField(max_length=100)
+    story = models.TextField()
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    age = models.IntegerField()
+    date_of_return = models.DateField()
+
+    def __str__(self):
+        return self.owner
