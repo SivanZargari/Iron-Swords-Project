@@ -92,6 +92,15 @@
             font-size: 18px;
             line-height: 1.6;
         }
+        .footer {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 10px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            border-top: 1px solid #ddd;
+            overflow: auto; /* Ensure footer can scroll if needed */
+        }
     </style>
 </head>
 <body>
@@ -275,7 +284,15 @@
     <source src="{% static 'difficult_documents/video33.mp4' %}" type="video/mp4">
      Your browser does not support the video tag.
     </video>
+    <video controls>
+    <source src="{% static 'difficult_documents/video34.mp4' %}" type="video/mp4">
+     Your browser does not support the video tag.
+    </video>
      </div>
     </div>
+
+    <footer class="footer">
+        "כל הזכויות שמורות לאתר - "היכל התהילה של גיבורי מלחמת חרבות הברזל ©
+    </footer>
 </body>
 </html>
