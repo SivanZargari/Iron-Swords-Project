@@ -48,6 +48,8 @@ urlpatterns = [
     path('difficult-documents/', views.difficult_documents, name='difficult_documents'),
     path('difficult_documents_view/', views.difficult_documents_view, name='difficult_documents_view'),
 
+    path('about/', views.about, name='about'),
+
     # Class-based views
     path('hero/new/', views.HeroCreateView.as_view(), name='hero-create'),
     path('hero/<int:pk>/edit/', views.HeroUpdateView.as_view(), name='hero-update'),

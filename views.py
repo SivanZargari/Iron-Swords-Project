@@ -375,3 +375,6 @@ def difficult_documents(request):
 
 def difficult_documents_view(request):
     return render(request, 'difficult_documents_view.html')
+
+def about(request):
+    return render(request, 'about.html')
