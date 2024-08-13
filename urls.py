@@ -1,59 +1,48 @@
-from django.urls import path
-from . import views
-from django.contrib.auth.views import LogoutView
-from .views import HeroListView
-from .views import kibbutz_stories, add_kibbutz_story, update_kibbutz_story, delete_kibbutz_story
-from .views import add_nova_party_testimony, update_testimonial, delete_nova_party_testimony
-from .views import testimonies_abductees, add_abductee_testimony, update_abductee_testimony, delete_abductee_testimony
-from .views import abductee_details
+"""
+URL configuration for ironSwords project.
 
-
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/5.0/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
+from django.contrib import admin
+from django.urls import path, include
+from ironSwordsApp import views
+from django.contrib.auth import views as auth_views
+from ironSwordsApp.views import custom_login_view, join_form_view
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', views.home, name='home'),
-    path('add-hero/', views.add_hero, name='add_hero'),
-    path('login/', views.login_view, name='login'),
+    path('admin/', admin.site.urls),
     path('transition/', views.transition, name='transition'),
     path('forgot-password/', views.forgot_password_view, name='forgot_password'),
-    path('forgot-password-submit/', views.forgot_password_submit, name='forgot_password_submit'),
-    path('create-account/', views.create_account_view, name='create_account'),
-    path('register/', views.register, name='register'),
+    path('login/', custom_login_view, name='login'),
+
+    path('join-form/', views.join_form_for_hero, name='join_form_for_hero'),
     path('hall-of-fame/', views.hall_of_fame, name='hall_of_fame'),
-    path('join_form_for_hero/', views.join_form_for_hero, name='join_form_for_hero'),
-    path('edit_hero/<int:hero_id>/', views.edit_hero, name='edit_hero'),
-    path('delete_hero/<int:hero_id>/', views.delete_hero, name='delete_hero'),
-    path('join_form/', views.join_form, name='join_form'),
-    path('logout/', LogoutView.as_view(), name='logout'),
-    path('heroes/', HeroListView.as_view(), name='hero_list'),
 
-    path('transition/', views.transition, name='transition'),
-    path('kibbutz_stories/', kibbutz_stories, name='kibbutz_stories'),
-    path('add_kibbutz_story/', add_kibbutz_story, name='add_kibbutz_story'),
-    path('delete_kibbutz_story/<int:story_id>/', delete_kibbutz_story, name='delete_kibbutz_story'),
-    path('update_kibbutz_story/<int:story_id>/', update_kibbutz_story, name='update_kibbutz_story'),
+    # Password reset URLs
+    path('reset_password/', auth_views.PasswordResetView.as_view(template_name='reset_password.html'), name='reset_password'),
+    path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(template_name='reset_password_sent.html'), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='reset_password_confirm.html'), name='password_reset_confirm'),
+    path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(template_name='reset_password_complete.html'), name='password_reset_complete'),
 
-    path('nova-party-evidence/', views.nova_party_evidence, name='nova_party_evidence'),
-    path('add_testimony/', add_nova_party_testimony, name='add_nova_party_testimony'),
-    path('edit_testimony/<int:pk>/', update_testimonial, name='update_testimonial'),
-    path('delete_testimony/<int:testimony_id>/', delete_nova_party_testimony, name='delete_nova_party_testimony'),
-   
-    path('zaka_people/', views.zaka_people, name='zaka_people'),
-
-    path('testimonies-abductees/', testimonies_abductees, name='testimonies-abductees'),
-    path('add-abductee-testimony/', add_abductee_testimony, name='add_abductee_testimony'),
-    path('update-abductee-testimony/<int:testimony_id>/', update_abductee_testimony, name='update_abductee_testimony'),
-    path('delete-abductee-testimony/<int:testimony_id>/', delete_abductee_testimony, name='delete_abductee_testimony'),
-    path('abductee/<int:id>/', abductee_details, name='abductee_details'),
-
-    path('difficult-documents/', views.difficult_documents, name='difficult_documents'),
-    path('difficult_documents_view/', views.difficult_documents_view, name='difficult_documents_view'),
-
-    path('about/', views.about, name='about'),
-
-    # Class-based views
-    path('hero/new/', views.HeroCreateView.as_view(), name='hero-create'),
-    path('hero/<int:pk>/edit/', views.HeroUpdateView.as_view(), name='hero-update'),
-    path('hero/<int:pk>/delete/', views.HeroDeleteView.as_view(), name='hero-delete'),
-    path('hero/<int:hero_id>/', views.hero_detail, name='hero_detail'),
+    # Include app URLs
+    path('', include('ironSwordsApp.urls')),
     
-    ]
+
+]
+
+# Serve media files during development
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
