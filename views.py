@@ -6,14 +6,15 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .forms import HeroForm, NovaPartyTestimonyForm, KibbutzStoryForm, TestimonialForm, AbducteeTestimonyForm
-from .models import Hero, NovaPartyTestimony, KibbutzStory, Testimonial, AbducteeTestimony
+from .forms import HeroForm, NovaPartyTestimonyForm, KibbutzStoryForm, TestimonialForm, AbducteeTestimonyForm, CommentForm
+from .models import Hero, NovaPartyTestimony, KibbutzStory, Testimonial, AbducteeTestimony, Comment
 from django.contrib.auth import get_user_model
 from django.views.generic import ListView
 from django.http import HttpResponseForbidden
 from .models import AbducteeTestimony
 from .forms import AbducteeTestimonyForm
 from django.core.exceptions import PermissionDenied
+from django.views.decorators.http import require_POST
 
 
 User = get_user_model()
@@ -314,8 +315,48 @@ def delete_nova_party_testimony(request, testimony_id):
 
 
 def zaka_people(request):
-    # Add any context or data retrieval here if needed
-    return render(request, 'zaka_people.html')
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user
+            comment.video_url = request.POST.get('video_url')  # Get the current video URL
+            comment.save()
+            return redirect('zaka_people')  # Redirect to the same page to show the new comment
+
+    else:
+        form = CommentForm()
+
+    comments = Comment.objects.all().order_by('-created_at')  # Fetch all comments ordered by creation date
+    context = {
+        'comment_form': form,
+        'comments': comments,
+    }
+    return render(request, 'zaka_people.html', context)
+
+@login_required
+def edit_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id, user=request.user)
+    
+    if request.method == 'POST':
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            form.save()
+            return redirect('zaka_people')  # Adjust to your URL name
+    else:
+        form = CommentForm(instance=comment)
+    
+    return render(request, 'edit_comment.html', {'form': form})
+
+@login_required
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id, user=request.user)
+    
+    if request.method == 'POST':
+        comment.delete()
+        return redirect('zaka_people')  # Adjust to your URL name
+    
+    return render(request, 'confirm_delete_zaka.html', {'comment': comment})
 
 
 def testimonies_abductees(request):

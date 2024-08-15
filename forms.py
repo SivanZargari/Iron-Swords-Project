@@ -2,7 +2,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Hero
-from .models import KibbutzStory, NovaPartyTestimony, Testimonial, AbducteeTestimony
+from .models import KibbutzStory, NovaPartyTestimony, Testimonial, AbducteeTestimony, Comment
 from django.contrib.auth.models import User
 
 class CustomAuthenticationForm(AuthenticationForm):
@@ -79,4 +79,15 @@ class AbducteeTestimonyForm(forms.ModelForm):
     date_of_return = forms.DateField(label="תאריך חזרה משבי", widget=forms.SelectDateWidget(years=range(1900, 2100)))
     image = forms.ImageField(label="תמונת החטוף ", required=False)
 
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
+        widgets = {
+            'content': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Write your comment...'}),
+        }
+        labels = {
+            'content': '',
+        }
 

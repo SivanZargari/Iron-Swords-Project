@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Hero, KibbutzStory, NovaPartyTestimony, AbducteeTestimony
+from .models import Hero, KibbutzStory, NovaPartyTestimony, AbducteeTestimony, Comment
 from django.utils.html import format_html
 
 
@@ -68,3 +68,19 @@ admin.site.register(NovaPartyTestimony, NovaPartyTestimonyAdmin)
 @admin.register(AbducteeTestimony)
 class AbducteeTestimonyAdmin(admin.ModelAdmin):
     list_display = ('owner', 'story', 'author', 'created_at')
+
+
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('user', 'content', 'created_at', 'video_url')  # Fields to display in the list view
+    search_fields = ('user__username', 'content')  # Fields to be searchable
+    list_filter = ('created_at', 'user')  # Filters for the list view
+    ordering = ('-created_at',)  # Order comments by creation date, descending
+
+    def has_delete_permission(self, request, obj=None):
+        # Allow deletion if the user is a superuser
+        if request.user.is_superuser:
+            return True
+        # Otherwise, deny deletion permission
+        return False
+
+admin.site.register(Comment, CommentAdmin)
