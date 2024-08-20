@@ -28,7 +28,7 @@ class KibbutzStory(models.Model):
         return self.title
     
 class NovaPartyTestimony(models.Model):
-    owner = models.CharField(max_length=100)
+    owner = models.CharField(max_length=255)
     story = models.TextField()
 
 

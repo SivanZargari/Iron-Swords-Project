@@ -142,13 +142,18 @@ def join_form_for_hero(request):
         print("Got form data")
         form = HeroForm(request.POST, request.FILES)  # Include request.FILES to handle file uploads
         if form.is_valid():
+            print("Form is valid")
             hero = form.save(commit=False)
             hero.user = request.user
             hero.save()
+            print(f"Hero saved: {hero}")
             return redirect('hall_of_fame')  # Redirect to the appropriate page
+        else:
+            print("Form is not valid", form.errors)
     else:
         form = HeroForm()
-    return render(request, 'join_form_for_hero.html', {'form': form})
+    return render(request, 'join_form.html', {'form': form})
+
 
 
 @login_required
@@ -158,13 +163,14 @@ def edit_hero(request, hero_id):
     if request.user != hero.user and not request.user.is_staff:
         return redirect('home')  # Redirect to home or show a permission error
     if request.method == 'POST':
-        form = HeroForm(request.POST, instance=hero)
+        form = HeroForm(request.POST, request.FILES, instance=hero)  # Include request.FILES for file uploads
         if form.is_valid():
             form.save()
             return redirect('hero_detail', hero_id=hero.id)  # Redirect to the hero detail page after saving
     else:
         form = HeroForm(instance=hero)
     return render(request, 'edit_hero.html', {'form': form, 'hero': hero})
+
 
 
 @login_required
@@ -366,14 +372,15 @@ def testimonies_abductees(request):
 @login_required
 def add_abductee_testimony(request):
     if request.method == 'POST':
-        form = AbducteeTestimonyForm(request.POST)
+        form = AbducteeTestimonyForm(request.POST, request.FILES)  # Ensure request.FILES is used
         if form.is_valid():
             AbducteeTestimony.objects.create(
                 owner=form.cleaned_data['owner'],
                 story=form.cleaned_data['story'],
                 author=request.user,
                 age=form.cleaned_data['age'],
-                date_of_return=form.cleaned_data['date_of_return']
+                date_of_return=form.cleaned_data['date_of_return'],
+                image=form.cleaned_data['image']
             )
             return redirect('testimonies-abductees')
     else:
@@ -385,7 +392,8 @@ def update_abductee_testimony(request, testimony_id):
     testimony = get_object_or_404(AbducteeTestimony, pk=testimony_id)
     
     if request.method == 'POST':
-        form = AbducteeTestimonyForm(request.POST, instance=testimony)
+        # Pass request.FILES to handle file uploads
+        form = AbducteeTestimonyForm(request.POST, request.FILES, instance=testimony)
         if form.is_valid():
             form.save()
             return redirect('testimonies-abductees')

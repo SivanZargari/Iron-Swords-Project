@@ -81,7 +81,7 @@
             המידע שיועבר על ידך יעובד במערכת וישולב בפרויקט<br>
             במילוי הטופס אתה מאשר את פרסום הפרטים - באתר
         </p>
-        <form method="post" action="{% url 'join_form_for_hero' %}">
+        <form method="post" action="{% url 'join_form_for_hero' %}" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group">
                 <label for="first_name">:שם פרטי</label>
