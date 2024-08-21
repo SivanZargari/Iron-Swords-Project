@@ -42,13 +42,18 @@
             font-size: 1.2em;
         }
         .ad-square {
-            direction: rtl;
-            text-align: right;
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
+            direction: rtl; /* Ensures the text direction is right-to-left */
+            text-align: right; /* Aligns text to the right */
+            background-color: rgba(255, 255, 255, 0.8); /* Background color with transparency */
+            padding: 10px; /* Padding inside the rectangle */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            margin-bottom: 15px; /* Space below the rectangle */
+            width: 250px; /* Fixed width for consistent size */
+            max-width: 90%; /* Responsive width to ensure it scales with the container */
+            box-sizing: border-box; /* Includes padding and border in width/height calculations */
+            overflow-wrap: break-word; /* Ensures long words break and don't overflow */
+            margin-left: 1225px; /* Moves the rectangle 1000 pixels to the right from its initial position */
         }
         .button-container {
             display: flex;
@@ -97,6 +102,13 @@
         .hero-box h2 {
             margin-top: 0;
             color: #007bff;
+        }
+        .hero-box img {
+            width: 200px; /* Fixed width for images */
+            height: 200px; /* Fixed height for images */
+            object-fit: cover; /* Ensure the image covers the box while maintaining aspect ratio */
+            border-radius: 8px; /* Optional: Rounded corners for the image */
+            margin-bottom: 10px; /* Space between image and text */
         }
         .actions a {
             text-decoration: none;
@@ -200,8 +212,9 @@
             <a href="{% url 'zaka_people' %}">מתנדבי זק"א</a>
             <a href="{% url 'testimonies-abductees' %}">עדויות חטופים שחזרו משבי חמאס</a>
             <a href="{% url 'difficult_documents' %}">תיעודים קשים לצפייה</a>
+            <a href="{% url 'light_candle' %}">הדלקת נר לזכרם</a>
             <a href="{% url 'about' %}">אודות</a>
-
+            
         </div>
 
         <div class="header">
@@ -246,6 +259,9 @@
             {% for hero in heroes %}
             <div class="hero-box">
                 <h2>{{ hero.first_name }} {{ hero.last_name }}</h2>
+                {% if hero.image %}
+                <img src="{{ hero.image.url }}" alt="{{ hero.first_name }} {{ hero.last_name }}">
+                {% endif %}
                 <p><strong>גיל:</strong> {{ hero.age }}</p>
                 <p><strong>מקום מגורים:</strong> {{ hero.hometown }}</p>
                 <p><strong>ארץ לידה:</strong> {{ hero.country_of_birth }}</p>
