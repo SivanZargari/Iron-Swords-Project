@@ -94,12 +94,15 @@
             box-shadow: 0 8px 16px rgba(0,0,0,0.3);
         }
         .testimony-box img {
-            max-width: 100%;
-            height: auto;
+            width: 300px; /* Fixed width */
+            height: 200px; /* Fixed height */
+            object-fit: contain; /* Ensure the entire image is visible while preserving aspect ratio */
             border-radius: 8px;
             margin-bottom: 10px;
             transition: transform 0.3s;
         }
+        
+        
         .testimony-box:hover img {
             transform: scale(1.1);
         }
@@ -151,7 +154,11 @@
             {% for testimony in testimonies %}
                 <a href="{% url 'abductee_details' testimony.id %}" class="testimony-box">
                     <h2>{{ testimony.owner }}</h2>
-                    <img src="{{ testimony.photo.url }}" alt="תמונת החטוף המשוחרר {{ testimony.name }}">
+                    {% if testimony.image %}
+                    <img src="{{ testimony.image.url }}" alt="Abductee Image" style="max-width: 300px;">
+                {% else %}
+                    <p>No image available</p>
+                {% endif %}
                     <p><strong>גיל:</strong> {{ testimony.age }}</p>
                     <p>{{ testimony.date_of_return }} <strong>:תאריך שחרור מהשבי </strong> </p>
                 </a>
