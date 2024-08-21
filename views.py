@@ -15,6 +15,8 @@ from .models import AbducteeTestimony
 from .forms import AbducteeTestimonyForm
 from django.core.exceptions import PermissionDenied
 from django.views.decorators.http import require_POST
+from .models import Candle
+from .forms import CandleForm
 
 
 User = get_user_model()
@@ -427,3 +429,15 @@ def difficult_documents_view(request):
 
 def about(request):
     return render(request, 'about.html')
+
+def light_candle(request):
+    if request.method == 'POST':
+        form = CandleForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('candle_list')  # Make sure 'candle_list' is defined in your URLs
+    else:
+        form = CandleForm()
+
+    candles = Candle.objects.all().order_by('-date_lit')
+    return render(request, 'light_candle.html', {'form': form, 'candles': candles})

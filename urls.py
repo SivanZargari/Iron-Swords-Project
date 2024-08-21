@@ -6,8 +6,7 @@ from .views import kibbutz_stories, add_kibbutz_story, update_kibbutz_story, del
 from .views import add_nova_party_testimony, update_testimonial, delete_nova_party_testimony
 from .views import testimonies_abductees, add_abductee_testimony, update_abductee_testimony, delete_abductee_testimony
 from .views import abductee_details
-from .views import edit_comment, delete_comment
-
+from .views import edit_comment, delete_comment, light_candle
 
 
 urlpatterns = [
@@ -53,6 +52,10 @@ urlpatterns = [
     path('difficult_documents_view/', views.difficult_documents_view, name='difficult_documents_view'),
 
     path('about/', views.about, name='about'),
+
+    path('light-candle/', light_candle, name='light_candle'),
+    path('candle-list/', light_candle, name='candle_list'),  
+
 
     # Class-based views
     path('hero/new/', views.HeroCreateView.as_view(), name='hero-create'),

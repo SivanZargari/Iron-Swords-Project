@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Hero, KibbutzStory, NovaPartyTestimony, AbducteeTestimony, Comment
+from .models import Hero, KibbutzStory, NovaPartyTestimony, AbducteeTestimony, Comment, Candle
 from django.utils.html import format_html
 
 
@@ -84,3 +84,10 @@ class CommentAdmin(admin.ModelAdmin):
         return False
 
 admin.site.register(Comment, CommentAdmin)
+
+class CandleAdmin(admin.ModelAdmin):
+    list_display = ('name', 'message', 'date_lit')
+    list_filter = ('date_lit',)
+    search_fields = ('name', 'message')
+
+admin.site.register(Candle, CandleAdmin)

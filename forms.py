@@ -2,7 +2,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Hero
-from .models import KibbutzStory, NovaPartyTestimony, Testimonial, AbducteeTestimony, Comment
+from .models import KibbutzStory, NovaPartyTestimony, Testimonial, AbducteeTestimony, Comment, Candle
 from django.contrib.auth.models import User
 
 class CustomAuthenticationForm(AuthenticationForm):
@@ -89,5 +89,17 @@ class CommentForm(forms.ModelForm):
         }
         labels = {
             'content': '',
+        }
+
+class CandleForm(forms.ModelForm):
+    class Meta:
+        model = Candle
+        fields = ['name', 'message']
+        labels = {
+            'name': 'הדלקת נר לזכר',
+            'message': 'כמה מילים לזכרו',
+        }
+        widgets = {
+            'message': forms.Textarea(attrs={'rows': 4}),
         }
 

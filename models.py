@@ -44,13 +44,13 @@ class Testimonial(models.Model):
     
 
 class AbducteeTestimony(models.Model):
-    owner = models.CharField(max_length=255)
+    owner = models.CharField(max_length=100)
     story = models.TextField()
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     age = models.IntegerField()
     date_of_return = models.DateField()
-    image = models.ImageField(upload_to='abductee_testimonies/', null=True, blank=True)  # Make sure this line exists
+    image = models.ImageField(upload_to='testimonies/', blank=True, null=True)  # Ensure this field is present
 
 
     def __str__(self):
@@ -69,3 +69,11 @@ class Comment(models.Model):
         verbose_name = "Comment"
         verbose_name_plural = "Comments"
         ordering = ['created_at']
+
+class Candle(models.Model):
+    name = models.CharField(max_length=100)
+    message = models.TextField(blank=True)
+    date_lit = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"{self.name} lit a candle on {self.date_lit.strftime('%Y-%m-%d')}."
