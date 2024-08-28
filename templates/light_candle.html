@@ -96,13 +96,15 @@
             background: #faf3e0;
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            max-width: 700px;
+            width: 700px; /* Fixed width for all candles */
+            height: 150px; /* Fixed height for all candles */
             border: 1px solid #e0d9d9;
             text-align: right;
+            box-sizing: border-box; /* Ensure padding is included within the width and height */
         }
 
         .candle p {
-            margin: 10px 0;
+            margin: 5px 0; /* Adjust margins to fit content neatly */
             color: #333;
         }
 

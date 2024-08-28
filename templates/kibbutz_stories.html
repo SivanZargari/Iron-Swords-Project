@@ -10,27 +10,21 @@
         body, html {
             height: 100%;
             margin: 0;
-            font-family: 'Times New Roman', serif;
+            font-family: 'Times New Roman', sans-serif;
             background-color: #f4f4f4;
             display: flex;
             flex-direction: column;
-            overflow: auto; /* Ensure body and html can scroll */
+            overflow: auto;
         }
         .bg {
-            background-image: url("{% static 'images/picc.jpg' %}");
-            background-position: center;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4)), url("{% static 'images/kibutz.jpg' %}");
+            background-position: top center;
             background-repeat: no-repeat;
             background-size: cover;
             flex: 1;
             padding: 20px;
             box-sizing: border-box;
-            overflow: auto; /* Ensure bg can scroll */
-        }
-        .header, .ad-square, .button-container, .story-box {
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            overflow: auto;
         }
         .header {
             text-align: center;
@@ -38,11 +32,27 @@
         }
         .header h1 {
             font-family: 'Georgia', serif;
-            color: #4CAF50;
-            text-shadow: 2px 2px 4px #888888;
-            border-bottom: 3px solid #4CAF50;
-            padding-bottom: 10px;
+            color: #ffffff; /* White color for the title */
+            font-size: 55px; /* Large font size */
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Enhanced shadow for better visibility */
             margin: 0;
+            padding: 20px;
+        }
+        .story-section {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            text-align: right; /* Align text to the right */
+            direction: rtl; /* Set text direction to right-to-left */
+            font-size: 15px;
+            line-height: 1.5;
+            color: #000000;
+        }
+        
+        .story-section p {
+            margin: 0 0 10px; /* Ensure spacing between paragraphs */
         }
         .story-grid {
             display: grid;
@@ -52,53 +62,82 @@
         }
         .story-box {
             text-align: right;
-            max-height: 300px; /* Set a maximum height */
-            min-height: 100px; /* Set a minimum height for short stories */
+            max-height: 300px;
+            min-height: 100px;
             background-color: white;
-            overflow: auto; /* Ensure stories can scroll if needed */
+            overflow: auto;
             opacity: 0.5;
-            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+            box-sizing: border-box;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         .story-box:hover {
             opacity: 1.0;
         }
         .story-box h2 {
             margin-top: 0;
-            font-size: 18px; /* Optional: Adjust font size for the title */
+            font-size: 22px;
+            color: #333333;
+        }
+        .story-box p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #000000;
         }
         .button-container {
             display: flex;
-            justify-content: space-between; /* Space out the buttons */
+            justify-content: space-between;
             margin-bottom: 20px;
         }
         .button-container .back-button,
         .button-container .button-square {
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 10px;
-            border-radius: 4px;
-            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+            background-color: #ffffff;
+            padding: 12px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         .button-container .back-button a,
         .button-container .button-square a {
             display: inline-block;
-            color: #fff;
-            padding: 10px 15px;
+            color: #ffffff;
+            padding: 12px 20px;
             text-decoration: none;
-            border-radius: 4px;
-            font-size: 14px;
+            border-radius: 8px;
+            font-size: 16px;
             text-align: center;
+            transition: background-color 0.3s, transform 0.3s;
+            background-color: #4CAF50; /* Green color */
         }
         .button-container .back-button a {
             background-color: #2196F3; /* Blue color */
         }
         .button-container .back-button a:hover {
             background-color: #0b7dda;
+            transform: scale(1.05);
         }
-        .button-container .button-square a {
+        .button-container .add-button {
+            background-color: #ffffff;
+            padding: 12px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .button-container .add-button a {
+            display: inline-block;
+            color: #ffffff;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 16px;
+            text-align: center;
+            transition: background-color 0.3s, transform 0.3s;
             background-color: #4CAF50; /* Green color */
         }
-        .button-container .button-square a:hover {
+        
+        .button-container .add-button a:hover {
             background-color: #45a049;
+            transform: scale(1.05);
         }
         .footer {
             background-color: rgba(255, 255, 255, 0.9);
@@ -107,14 +146,28 @@
             font-size: 12px;
             color: #666;
             border-top: 1px solid #ddd;
-            overflow: auto; /* Ensure footer can scroll if needed */
+            overflow: auto;
         }
     </style>
+
 </head>
 <body>
     <div class="bg">
         <div class="header">
             <h1>סיפורי קיבוצי העוטף</h1>
+        </div>
+
+        <div class="story-section">
+            <p>
+                ב-7 באוקטובר 2023 הפכו הקיבוצים בעוטף עזה ליעד למתקפה הרסנית וחסרת תקדים, שסימנה את תחילתה של מלחמת "חרבות הברזל". לפנות בוקר, כשהתושבים עסוקים בשגרת יומם, פתחו מחבלי חמאס בתקיפה מתואמת במספר קיבוצים סמוך לגבול עזה.            </p>
+            <p>
+                המחבלים ביצעו מעשים מחרידים, שרפו בתים עם תושבים עדיין בפנים, בזזו נכסים וביצעו מעשי אונס, עינויים ורצח. חלק מהתושבים נקשרו, נשרפו ונהרגו באכזריות, בעוד שאחרים נחטפו והובלו לרצועת עזה. התוקפים פרצו את הגבול באמצעות אופנועים, כלי רכב ואפילו מצנחי רחיפה, ותקפו אזרחים ללא הבחנה.            </p>
+            <p>
+                תושבי הקיבוצים, בהם גברים, נשים, ילדים וזקנים, מצאו את עצמם במצור. רבים נאלצו להסתתר בחדרים בטוחים או לנסות להימלט. במקרים מסוימים, התושבים נלחמו באומץ כדי להגן על משפחותיהם ושכניהם.            </p>
+            <p>
+                מתקפה זו על הקיבוצים בעוטף עזה סימנה הסלמה מחרידה באלימות והובילה לתגובה מהירה וכוחנית מצד ישראל, וכתוצאה מכך המלחמה המכונה "מלחמת חרבות הברזל". אירועי אותו יום הותירו צלקות עמוקות בקהילות, כשחיים רבים אבדו וניצולים מתמודדים עם הטראומה של התקיפה חסרת התקדים על בתיהם.            </p>
+            <p> <strong>
+                כאן תוכלו לקרוא על האירועים שהתרחשו, שנותרו זיכרון עוצמתי ונוקב לעם היהודי:            </strong></p>
         </div>
 
         <div class="button-container">
