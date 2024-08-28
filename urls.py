@@ -47,6 +47,9 @@ urlpatterns = [
     path('delete-abductee-testimony/<int:testimony_id>/', delete_abductee_testimony, name='delete_abductee_testimony'),
     path('abductee/<int:id>/', abductee_details, name='abductee_details'),
     path('testimonies/', views.testimonies_abductees, name='testimonies-abductees'),
+    path('testimonies/', views.testimonies_abductees, name='testimonies_abductees'),
+   
+
 
     path('difficult-documents/', views.difficult_documents, name='difficult_documents'),
     path('difficult_documents_view/', views.difficult_documents_view, name='difficult_documents_view'),
