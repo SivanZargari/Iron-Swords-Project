@@ -280,11 +280,14 @@ def nova_party_evidence(request):
     return render(request, 'nova_party_evidence.html', {'testimonies': testimonies})
 
 
+@login_required
 def add_nova_party_testimony(request):
     if request.method == 'POST':
         form = NovaPartyTestimonyForm(request.POST)
         if form.is_valid():
-            form.save()
+            testimony = form.save(commit=False)  # Create an instance but don’t save to the database yet
+            testimony.author = request.user  # Set the author to the current logged-in user
+            testimony.save()  # Now save the instance to the database
             return redirect('nova_party_evidence')  # Redirect to the testimonies page
     else:
         form = NovaPartyTestimonyForm()
@@ -292,34 +295,35 @@ def add_nova_party_testimony(request):
     return render(request, 'add_nova_party_testimony.html', {'form': form})
 
 
-
 @login_required
 def update_testimonial(request, pk):
-    testimonial = get_object_or_404(NovaPartyTestimony, id=pk)  # Changed to NovaPartyTestimony
-    # Check if the user is the author or an admin
+    testimonial = get_object_or_404(NovaPartyTestimony, id=pk)
     if request.user != testimonial.author and not request.user.is_superuser:
         return HttpResponseForbidden("You do not have permission to edit this testimonial.")
     if request.method == "POST":
-        form = NovaPartyTestimonyForm(request.POST, instance=testimonial)  # Changed to NovaPartyTestimonyForm
+        form = NovaPartyTestimonyForm(request.POST, instance=testimonial)
         if form.is_valid():
             form.save()
-            return redirect('nova_party_testimonies')
+            return redirect('nova_party_evidence')
     else:
-        form = NovaPartyTestimonyForm(instance=testimonial)  # Changed to NovaPartyTestimonyForm
+        form = NovaPartyTestimonyForm(instance=testimonial)
     return render(request, 'update_testimonial.html', {'form': form})
-
-
 
 
 @login_required
 def delete_nova_party_testimony(request, testimony_id):
     testimony = get_object_or_404(NovaPartyTestimony, id=testimony_id)
+    
     if request.user != testimony.author and not request.user.is_superuser:
-        return HttpResponseForbidden("You do not have permission to delete this testimonial.")
-    if request.method == "GET" and request.GET.get('confirm') == 'yes':
+        return HttpResponseForbidden("You do not have permission to delete this testimony.")
+    
+    if request.method == "POST":
         testimony.delete()
-        return redirect('nova_party_testimonies')
+        return redirect('nova_party_evidence')  
+
     return render(request, 'confirm_delete_nova_party_testimony.html', {'testimony': testimony})
+
+
 
 
 def zaka_people(request):

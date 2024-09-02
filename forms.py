@@ -38,8 +38,8 @@ class KibbutzStoryForm(forms.ModelForm):
         model = KibbutzStory
         fields = ['title', 'content']
         labels = {
-            'title': 'הכותרת',
-            'content': 'התוכן',
+            'title': 'שם הקיבוץ',
+            'content': 'סיפור הקיבוץ בעקבות המלחמה',
         }
         widgets = {
             'content': forms.Textarea(attrs={'rows': 5}),
@@ -85,7 +85,7 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ['content']
         widgets = {
-            'content': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Write your comment...'}),
+            'content': forms.Textarea(attrs={'rows': 3, 'placeholder': 'כתוב את התגובה שלך...'}),
         }
         labels = {
             'content': '',

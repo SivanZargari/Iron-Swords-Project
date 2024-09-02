@@ -28,12 +28,16 @@ class KibbutzStory(models.Model):
         return self.title
     
 class NovaPartyTestimony(models.Model):
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     owner = models.CharField(max_length=255)
     story = models.TextField()
 
 
     def __str__(self):
-        return self.owner
+        if self.author== None:
+            return ''
+        else:
+            return self.author.username
     
 class Testimonial(models.Model):
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)

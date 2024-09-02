@@ -32,11 +32,12 @@ urlpatterns = [
     path('delete_kibbutz_story/<int:story_id>/', delete_kibbutz_story, name='delete_kibbutz_story'),
     path('update_kibbutz_story/<int:story_id>/', update_kibbutz_story, name='update_kibbutz_story'),
 
+    path('nova-party-evidence/<int:id>/', views.nova_party_evidence, name='nova_party_evidence'),
     path('nova-party-evidence/', views.nova_party_evidence, name='nova_party_evidence'),
     path('add_testimony/', add_nova_party_testimony, name='add_nova_party_testimony'),
-    path('comment/edit/<int:comment_id>/', edit_comment, name='edit_comment'),
-    path('delete_testimony/<int:testimony_id>/', delete_nova_party_testimony, name='delete_nova_party_testimony'),
-   
+    path('testimonial/edit/<int:pk>/', views.update_testimonial, name='update_testimonial'),
+    path('delete_testimony/<int:testimony_id>/', views.delete_nova_party_testimony, name='delete_nova_party_testimony'),
+    
     path('zaka_people/', views.zaka_people, name='zaka_people'),
     path('comment/edit/<int:comment_id>/', edit_comment, name='edit_comment'),
     path('delete_comment/<int:comment_id>/', delete_comment, name='delete_comment'),
