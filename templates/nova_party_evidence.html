@@ -17,7 +17,7 @@
             overflow: auto;
         }
         .bg {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4)), url("{% static 'images/nn.webp' %}");
+            background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4)), url("{% static 'images/migunit.webp' %}");
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -146,7 +146,10 @@
             font-size: 12px;
             color: #666;
             border-top: 1px solid #ddd;
-            overflow: auto;
+            position: fixed; /* Fix footer to the bottom */
+            bottom: 0;
+            width: 100%;
+            font-family: 'Arial'
         }
     </style>
 </head>
@@ -182,11 +185,12 @@
                     <p>{{ testimony.story }}</p>
 
                     {% if user.is_authenticated %}
-                    {% if user == testimony.author or user.is_superuser %}
-                        <!-- Show update and delete options for author and admin -->
-                        <a href="{% url 'update_testimonial' testimony.id %}">עריכה</a>
-                        <a href="{% url 'delete_nova_party_testimony' testimony.id %}">מחיקה</a>
-                    {% endif %}
+                        {% if user == testimony.author or user.is_superuser %}
+                            <!-- Show update and delete options for author and admin -->
+                            <a href="{% url 'update_testimonial' testimony.id %}">עריכה</a>
+                            <a href="{% url 'delete_nova_party_testimony' testimony.id %}">מחיקה</a>
+                           
+                            {% endif %}
                 {% endif %}
                 </div>
             {% endfor %}

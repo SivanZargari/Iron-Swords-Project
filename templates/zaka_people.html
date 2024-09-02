@@ -12,57 +12,52 @@
             margin: 0;
             font-family: Times New Roman, sans-serif;
             background-color: #f4f4f4;
-            display: flex;
-            flex-direction: column;
             direction: rtl; /* Right-to-left direction */
             text-align: right; /* Align text to the right */
         }
-        .bg {
-            background-image: url("{% static 'images/picc.jpg' %}");
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-attachment: fixed;
-            flex: 1;
-            padding: 20px;
-            box-sizing: border-box;
-        }
+        
         .header {
-            padding: 20px;
-            margin-bottom: 20px;
             text-align: center;
-            direction: rtl;
+            color: #ffffff; 
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); 
+            margin-bottom: 20px;
         }
+
+        .header img {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+        }
+        
         .header h1 {
             font-family: 'Georgia', serif;
-            color: #ffffff; /* White color for the title */
-            font-size: 55px; /* Large font size */
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Enhanced shadow for better visibility */
-            margin: 0;
-            padding: 20px;
+            font-size: 55px;
+            margin: 20px 0 10px 0;
+            color: #000;
         }
+        
         .header p {
             background-color: rgba(255, 255, 255, 0.9);
             padding: 15px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             margin-bottom: 20px;
-            text-align: right; /* Align text to the right */
-            direction: rtl; /* Set text direction to right-to-left */
             font-size: 15px;
-            line-height: 1.5;
+            line-height: 1.9;
             color: #000000;
         }
 
         .video-wrapper {
             margin: 20px auto;
-            max-width: 800px; /* Adjust as needed */
+            max-width: 800px;
         }
+        
         .video-wrapper iframe {
             width: 100%;
-            height: 315px; /* Adjust height as needed */
+            height: 315px;
             border: none;
         }
+
         .back-button {
             display: block;
             width: 200px;
@@ -75,9 +70,20 @@
             border-radius: 4px;
             font-size: 16px;
         }
+        
         .back-button:hover {
             background-color: #0056b3;
         }
+
+        .comments-section {
+            margin: 20px auto;
+            max-width: 800px;
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
         .footer {
             background-color: rgba(255, 255, 255, 0.9);
             padding: 10px;
@@ -85,15 +91,10 @@
             font-size: 12px;
             color: #666;
             border-top: 1px solid #ddd;
-            overflow: auto; /* Ensure footer can scroll if needed */
-        }
-        .comments-section {
-            margin: 20px auto;
-            max-width: 800px; /* Adjust as needed */
-            background: #fff;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            font-family: 'Arial'
         }
         .comments-section h3 {
             border-bottom: 2px solid #007bff;
@@ -190,9 +191,15 @@
 <body>
     <div class="bg">
         <div class="header">
+             <img src="{% static 'images/zaka.jpg' %}" alt= 'מתנדבי זק"א'>
             <h1>מתנדבי זק"א</h1>
-            <p>במהלך מלחמת חרבות הברזל, מתנדבי זק"א סיפקו תמיכה חיונית בתוך הכאוס. הם ידועים במסירותם למאמצים הומניטריים, מתנדבי זק"א הציעו סיוע רפואי חירום, ערכו משימות חיפוש והצלה ותמכו בקורבנות ובמשפחותיהם. מעשי האומץ והחמלה הבלתי אנוכיים שלהם הדגימו את מחויבותם להקל על הסבל ולהביא תקווה במהלך המלחמה. תרומתם נותרה עדות רבת עוצמה לגבורתם ולמסירותם.</p>
-
+            <p>במהלך מלחמת חרבות הברזל, מתנדבי זק"א סיפקו תמיכה חיונית בתוך הכאוס.<br>
+                הם ידועים במסירותם למאמצים הומניטריים, מתנדבי זק"א הציעו סיוע רפואי חירום, ערכו משימות חיפוש והצלה ותמכו בקורבנות ובמשפחותיהם.<br>
+                מעשי האומץ והחמלה שלהם הדגימו את מחויבותם להקל על הסבל ולהביא תקווה במהלך המלחמה.<br>
+                תרומתם נותרה עדות רבת עוצמה לגבורתם ולמסירותם.<br>
+                <strong>כאן תוכלו לצפות ולהאזין לעדויות ממקור ראשון של מתנדבי זק"א אשר ראו במו עיניהם את התופת שהתרחשה:</strong>
+            </p>
+            
             <a href="{% url 'home' %}" class="back-button">חזרה לעמוד הראשי</a>
         </div>
         
@@ -270,7 +277,7 @@
     </div>
 
     <footer class="footer">
-        "כל הזכויות שמורות לאתר - "היכל התהילה של גיבורי מלחמת חרבות הברזל ©
+        © כל הזכויות שמורות לאתר - "היכל התהילה של גיבורי מלחמת חרבות הברזל" 
     </footer>
 </body>
 </html>

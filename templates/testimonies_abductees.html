@@ -15,6 +15,7 @@
             display: flex;
             flex-direction: column;
             overflow: auto;
+            padding-bottom: 60px;
         }
         .bg {
             background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4)), url("{% static 'images/hamas.webp' %}");
@@ -22,8 +23,9 @@
             background-repeat: no-repeat;
             background-size: cover;
             height:195px;
-            padding: 20px;
+            padding: 10px;
             box-sizing: border-box;
+            padding-bottom: 60px;
         }
         .header {
             text-align: center;
@@ -141,16 +143,16 @@
             font-weight: bold;
         }
         .footer {
-            text-align: center;
-            padding: 10px;
             background-color: rgba(255, 255, 255, 0.9);
-            color: #666;
-            position: absolute;
-            bottom: 0;
-            width: 100%;
+            padding: 10px;
+            text-align: center;
             font-size: 12px;
+            color: #666;
             border-top: 1px solid #ddd;
-            overflow: auto;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            font-family: 'Arial'
         }
     </style>
 </head>

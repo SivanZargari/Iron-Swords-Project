@@ -54,10 +54,13 @@
             border-radius: 4px;
             box-sizing: border-box;
             margin-top: 30px; /* Space for the label */
+            text-align: right;
+
         }
         .form-group textarea {
             resize: vertical;
             min-height: 100px;
+            text-align: right;
         }
         .button-group {
             display: flex;
@@ -103,11 +106,11 @@
             {% csrf_token %}
             <div class="form-group">
                 <label for="title">:שם הקיבוץ</label>
-                <input type="text" id="title" name="title" placeholder="Insert name of the kibbutz here" required>
+                <input type="text" id="title" name="title" placeholder="הכנס כאן את שם הקיבוץ" required>
             </div>
             <div class="form-group">
                 <label for="content">:סיפור הקיבוץ בעקבות המלחמה</label>
-                <textarea id="content" name="content" placeholder="Insert story content here" required></textarea>
+                <textarea id="content" name="content" placeholder="הוסף תוכן סיפור כאן" required></textarea>
             </div>
             <div class="button-group">
                 <button type="submit">שלח סיפור</button>
