@@ -18,19 +18,20 @@
 
         .navbar {
             width: 100%;
-            background-color: #333;
+            background-color: transparent;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 2px 0;
-            position: fixed;
             top: 0;
             left: 0;
             z-index: 1000;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.2); /* הוספת גבול תחתון */
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.2); /* צל עליון ותחתון */
         }
 
         .navbar a {
-            color: #f2f2f2;
+            color: black;
             text-align: center;
             padding: 14px 20px;
             text-decoration: none;
@@ -49,7 +50,7 @@
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
             width: 600px;
             text-align: center;
-            margin-top: 80px; /* Added margin to compensate for fixed navbar */
+            margin-top: 35px; /* Added margin to compensate for fixed navbar */
         }
 
         .join-form-box h1 {

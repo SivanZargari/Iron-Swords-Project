@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(to right, #f1f1f1, #e1e1e1);
+            background: linear-gradient(to right, #f0f4f8, #e0e6ea);
             color: #333;
             line-height: 1.6;
             direction: rtl;
@@ -17,80 +17,80 @@
         }
         h1 {
             text-align: center;
-            color: #d9534f;
-            margin: 60px 0;
-            font-size: 3em;
+            color: #ffffff; /* צבע טקסט לבן */
+            background: linear-gradient(to right, #4A90E2, #000000); /* שיפוע צבעים */
+            border-radius: 10px; /* קצוות מעוגלים */
+            padding: 15px; /* ריפוד פנימי מוקטן */
+            margin: 40px auto; /* רווח מעל ומתחת מוקטן */
+            font-size: 2.3em; /* גודל טקסט מוקטן */
             font-weight: bold;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
-            transform: perspective(500px) rotateX(10deg);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* צל טקסט מוקטן */
+            border: 4px solid #1d71b8; /* גבול סביב הכותרת מוקטן */
+            max-width: 90%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* צל חיצוני */
         }
         section {
             margin: 30px auto;
             padding: 30px;
-            background: #fff;
-            border-radius: 20px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             max-width: 900px;
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         section:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
         .section-title {
             font-weight: bold;
-            font-size: 2.5em;
-            color: #0275d8;
-            margin-bottom: 20px;
-            position: relative;
+            font-size: 2.2em;
+            color: #1d71b8;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #1d71b8;
             padding-bottom: 10px;
-            border-bottom: 3px solid #0275d8;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
         .cta-section {
             text-align: center;
-            margin-top: 50px;
+            margin: 50px auto;
             padding: 30px;
-            background: linear-gradient(to right, #fff, #f9f9f9);
+            background: #f9f9f9;
             border-radius: 15px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            transform: perspective(500px) rotateX(-5deg);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         .cta-button {
-            background-color: #0275d8;
-            color: white;
-            padding: 15px 30px;
-            font-size: 1.2em;
+            background-color: #1d71b8;
+            color: #ffffff;
+            padding: 15px 25px;
+            font-size: 1.1em;
             border: none;
-            border-radius: 12px;
+            border-radius: 8px;
             cursor: pointer;
             text-decoration: none;
             transition: background-color 0.3s, transform 0.3s;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
         }
         .cta-button:hover {
-            background-color: #025aa5;
+            background-color: #155a8a;
             transform: scale(1.05);
         }
         .cta-button:active {
-            background-color: #014a8a;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            background-color: #124a6b;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         .section-image {
             max-width: 100%;
             height: auto;
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
         }
         .thank-you {
             text-align: center;
             font-size: 1.2em;
-            color: #555;
+            color: #666;
             margin-top: 40px;
-            transform: perspective(500px) rotateX(2deg);
         }
         .section-content {
-            position: relative;
             padding: 20px;
         }
         .section-content::before {
@@ -100,59 +100,55 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 8px;
-            background: #d9534f;
-            border-radius: 0 0 20px 20px;
+            height: 6px;
+            background: #2a9d8f;
+            border-radius: 0 0 15px 15px;
             z-index: -1;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
         p {
-            font-size: 1.2em;
-            margin-bottom: 20px;
+            font-size: 1.1em;
+            margin-bottom: 15px;
             text-align: justify;
-            line-height: 1.8;
-            transform: perspective(500px) rotateX(2deg);
+            line-height: 1.7;
         }
         .footer {
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: #ffffff;
             padding: 10px;
             text-align: center;
             font-size: 12px;
-            color: #666;
+            color: #888;
             border-top: 1px solid #ddd;
-            overflow: auto; /* Ensure footer can scroll if needed */
         }
         .intro-section {
-            background: #0275d8;
-            color: white;
-            padding: 40px;
+            background: #ffffff;
+            color: #333;
+            padding: 30px;
             text-align: center;
-            border-radius: 20px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin: 30px auto;
-            max-width: 900px;
+            max-width: 800px;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #333;
+            font-size: 1.1em;
+            margin-bottom: 10px;
         }
         .intro-section h2 {
-            font-size: 2em;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-size: 1.8em;
+            margin-bottom: 15px;
         }
         .intro-section p {
-            font-size: 1.2em;
-            line-height: 1.8;
+            font-size: 1.1em;
+            line-height: 1.6;
             margin: 0;
         }
     </style>
 </head>
 <body>
 
-    <section class="intro-section">
-        <h2>הקדמה</h2>
-        <p>אני סיון זרגרי סטודנטית לתואר ראשון במדעי המחשב במכללה האקדמית רמת גן,</p>
-        <p>יצרתי פרויקט זה להעלאת המודעות למלחמת "חרבות ברזל" ולמאורעותיה , וכזכרון נצחי עבור מדינת ישראל</p>
-    </section>
-
-    <h1>ברוכים הבאים ל"היכל התהילה של מלחמת חרבות הברזל"</h1>
+    <h1>ברוכים הבאים ל"היכל התהילה של גיבורי מלחמת חרבות הברזל"</h1>
 
     <section>
         <p>מחווה לאומץ, להקרבה ולחוסן של גיבורי מלחמת "חרבות הברזל". הפלטפורמה שלנו מוקדשת לשימור הסיפורים של אלה שעיצבו את ההיסטוריה, בין אם באמצעות אומץ לבם בשדה הקרב או תרומתם לקהילות שהושפעו מהמלחמה.</p>
@@ -196,9 +192,17 @@
 
     <section>
         <div class="section-title">תודה</div>
-        <p>תודה שביקרתם ב"היכל התהילה של מלחמת חרבות ברזל"</p>
-        <p>ביחד, נוכל להבטיח שסיפורי הגיבורים יחיו לנצח!</p>
+        <p>תודה שביקרתם ב"היכל התהילה של גיבורי מלחמת חרבות ברזל"</p>
+        <p>ביחד, נוכל להבטיח שסיפורי הגבורה יחיו לנצח!</p>
     </section>
+
+    <section class="intro-section">
+        <p class="highlight">שמי סיון זרגרי , סטודנטית לתואר ראשון במדעי המחשב במכללה "האקדמית רמת גן".</p>
+        <p class="highlight">יצרתי אתר זה להעלאת המודעות למלחמת "חרבות ברזל" ולמאורעותיה , וכזכרון נצחי עבור מדינת ישראל</p>
+        <p> ניתן ליצור קשר בכתובת: Sivanzargari120@gmail.com</p>
+        <p> ובנייד: 052-454-1011</p>
+    </section>
+    
 
     <footer class="footer">
         © כל הזכויות שמורות לאתר - "היכל התהילה של מלחמת חרבות ברזל" 

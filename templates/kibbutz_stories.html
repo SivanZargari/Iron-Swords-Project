@@ -17,7 +17,7 @@
             overflow: auto;
         }
         .bg {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4)), url("{% static 'images/kib.jpg' %}");
+            background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)), url("{% static 'images/k.jpg' %}");
             background-position:  center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -49,6 +49,7 @@
             font-size: 15px;
             line-height: 1.5;
             color: #000000;
+            text-align: center;
         }
         
         .story-section p {
@@ -57,7 +58,7 @@
         .story-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            gap: 25px;
             margin-top: 20px;
         }
         .story-box {
@@ -71,6 +72,8 @@
             padding: 15px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 25px; /* הגדלת המרווח בין הסיפורים לאורך */
+
         }
         .story-box:hover {
             opacity: 1.0;
@@ -139,6 +142,39 @@
             background-color: #45a049;
             transform: scale(1.05);
         }
+        /* CSS עבור הכפתורים */
+        .edit-button {
+            background-color: #007bff; /* כחול */
+            color: white;
+            padding: 8px 16px;
+            font-size: 14px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
+            display: inline-block;
+        }
+        
+        .edit-button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        
+        .delete-button {
+            background-color: #FF6347; /* אדום */
+            color: white;
+            padding: 8px 16px;
+            font-size: 14px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
+            display: inline-block;
+        }
+        
+        .delete-button:hover {
+            background-color: #FF4500; /* אדום כהה יותר בהובר */
+            transform: scale(1.05);
+        }
+        
         .footer {
             background-color: rgba(255, 255, 255, 0.9);
             padding: 10px;
@@ -192,8 +228,8 @@
 
                     {% if user.is_authenticated and user == story.author or user.is_superuser %}
                     <!-- Show update and delete options for author and admin -->
-                        <a href="{% url 'update_kibbutz_story' story.id %}">עריכה</a>
-                        <a href="{% url 'delete_kibbutz_story' story.id %}">מחיקה</a>
+                        <a href="{% url 'update_kibbutz_story' story.id %}"class="edit-button">עריכה</a>
+                        <a href="{% url 'delete_kibbutz_story' story.id %}"class="delete-button">מחיקה</a>
                     {% endif %}
                 </div>
             {% endfor %}

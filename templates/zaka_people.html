@@ -60,7 +60,7 @@
 
         .back-button {
             display: block;
-            width: 200px;
+            width: 120px;
             margin: 20px auto;
             padding: 10px;
             text-align: center;
@@ -102,34 +102,42 @@
             margin-bottom: 20px;
             color: #333;
             text-align: right;
+            font-size: 24px;
+            font-weight: bold;
         }
+
         .comment {
-            display: flex;
-            flex-direction: column;
+            padding: 15px;
             border-bottom: 1px solid #ddd;
-            padding: 10px 0;
+            margin-bottom: 10px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
+
         .comment:last-child {
             border-bottom: none;
         }
+
         .comment-user {
             font-weight: bold;
             color: #007bff;
-            text-align: right;
+            margin-bottom: 5px;
         }
+
         .comment-content {
-            margin: 5px 0;
-            text-align: right;
+            margin-bottom: 10px;
+            font-size: 16px;
+            line-height: 1.5;
         }
+
         .comment-timestamp {
             font-size: 0.85em;
             color: #999;
-            text-align: right;
         }
+
         .edit-button, .delete-button {
-            width: 100px;
-            margin-left: 10px;
-            padding: 5px 8px;
+            padding: 5px 10px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
@@ -137,26 +145,36 @@
             font-size: 14px;
             display: inline-block;
             text-align: center;
+            margin-top: 10px;
         }
+
         .edit-button {
             background-color: #007bff;
             color: #fff;
         }
+
         .edit-button:hover {
             background-color: #0056b3;
         }
+
         .delete-button {
             background-color: #dc3545;
             color: #fff;
         }
+
         .delete-button:hover {
             background-color: #c82333;
         }
+
         .comment-form {
             margin-top: 20px;
-            padding: 10px;
+            padding: 15px;
             border-top: 1px solid #ddd;
+            background: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
+
         .comment-form textarea {
             width: 100%;
             padding: 10px;
@@ -164,9 +182,11 @@
             border: 1px solid #ddd;
             margin-bottom: 10px;
             box-sizing: border-box;
-            text-align: right;
             resize: vertical;
+            font-size: 16px;
+            line-height: 1.5;
         }
+
         .comment-form button {
             padding: 10px 15px;
             background-color: #007bff;
@@ -176,6 +196,7 @@
             cursor: pointer;
             font-size: 16px;
         }
+
         .comment-form button:hover {
             background-color: #0056b3;
         }
@@ -199,8 +220,6 @@
                 תרומתם נותרה עדות רבת עוצמה לגבורתם ולמסירותם.<br>
                 <strong>כאן תוכלו לצפות ולהאזין לעדויות ממקור ראשון של מתנדבי זק"א אשר ראו במו עיניהם את התופת שהתרחשה:</strong>
             </p>
-            
-            <a href="{% url 'home' %}" class="back-button">חזרה לעמוד הראשי</a>
         </div>
         
         <div class="video-wrapper">
@@ -240,7 +259,9 @@
             <iframe src="https://www.youtube.com/embed/wKq3fFFIQSw" allowfullscreen></iframe>
         </div>
         <!-- Add more video wrappers as needed -->
-    
+
+        <a href="{% url 'home' %}" class="back-button">חזרה לעמוד הראשי</a>
+
          <!-- Comments Section -->
     <div class="comments-section">
         <h3>תגובות</h3>

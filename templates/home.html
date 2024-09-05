@@ -53,7 +53,7 @@
             max-width: 90%; /* Responsive width to ensure it scales with the container */
             box-sizing: border-box; /* Includes padding and border in width/height calculations */
             overflow-wrap: break-word; /* Ensures long words break and don't overflow */
-            margin-left: 1225px; /* Moves the rectangle 1000 pixels to the right from its initial position */
+            margin-left: 1100px; /* Moves the rectangle 1000 pixels to the right from its initial position */
         }
         .button-container {
             display: flex;
@@ -253,6 +253,10 @@
             overflow: hidden;
             border-radius: 5px; /* שמור על הקצוות המעוגלים    */
             margin-top: 5px;
+            width: 100%; /* Full width to align with the accordion button */
+            position: absolute; /* Position it below the button */
+            top: 100%; /* Align it below the button */
+            left: 0; /* Align it with the left edge of the button */
         }
         /* שינוי צבע בעת ריחוף עבור כפתור העדויות */
         .navbar .accordion:hover {
@@ -278,10 +282,12 @@
             text-decoration: none;
             padding: 10px 15px;
             display: block;
-            margin: 5px 0;
             border-radius: 5px;
             transition: background-color 0.3s;
             text-align: center;
+            width: 90%; /* קבע רוחב מותאם אישית לכפתורים */
+            max-width: 200px; /* הגבל את הרוחב המרבי */
+            margin: 5px auto; /* רווח אוטומטי בצדדים */
         }
         /* שינוי צבע בעת ריחוף עבור הכפתורים */
         .navbar .panel a:hover {
