@@ -66,6 +66,9 @@
             color: #555555;
             line-height: 1.6;
             font-size: 20x;
+            white-space: pre-wrap; /* שמירה על רווחים */
+            text-align: right; /* טקסט מיושר לימין */
+            direction: rtl; /* טקסט זורם מימין לשמאל */
         }
         .details-box p strong {
             color: #007BFF;
@@ -145,9 +148,9 @@
             <h2>{{ testimony.owner }}</h2>
             <img src="{{ testimony.photo.url }}" alt= {{ testimony.name }}>
             <p><strong>גיל:</strong> {{ testimony.age }}</p>
-            <p>{{ testimony.date_of_return }} <strong>: תאריך שחרור מהשבי</strong></p>
-            <p><strong>: אירועי השבי</strong></p>
-            <p>{{ testimony.story }}</p>
+            <p><strong>תאריך שחרור מהשבי:</strong> {{ testimony.date_of_return }}</p>
+            <p><strong>אירועי השבי:</strong></p>
+            <p>{{ testimony.story|linebreaks }}</p> 
         </div>
 
         {% if user.is_authenticated %}

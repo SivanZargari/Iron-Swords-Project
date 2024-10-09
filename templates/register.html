@@ -43,7 +43,7 @@
         .register-box button {
             width: 100%;
             padding: 12px;
-            background-color: #007bff;
+            background-color: #28a745; /* צבע ירוק */
             border: none;
             color: #fff;
             border-radius: 6px;
@@ -51,7 +51,7 @@
             font-size: 16px;
         }
         .register-box button:hover {
-            background-color: #0056b3;
+            background-color: #218838; /* גוון כהה יותר לירוק */
         }
         .register-box .links {
             margin-top: 15px;
@@ -68,6 +68,7 @@
 <body>
     <div class="register-box">
         <h2>הרשמה</h2>
+        <p> .זה מהיר וקל</p>
         {% if messages %}
             {% for message in messages %}
                 <p style="color: green;">{{ message }}</p>

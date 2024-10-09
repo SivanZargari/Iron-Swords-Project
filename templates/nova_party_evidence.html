@@ -223,8 +223,8 @@
                     {% if user.is_authenticated %}
                         {% if user == testimony.author or user.is_superuser %}
                             <!-- Show update and delete options for author and admin -->
-                            <a href="{% url 'update_testimonial' testimony.id %}"class="edit-button">עריכה</a>
-                            <a href="{% url 'delete_nova_party_testimony' testimony.id %}"class="delete-button">מחיקה</a>
+                            <a href="{% url 'update_testimonial' testimony.id %}" class="edit-button">עריכה</a>
+                            <a href="{% url 'delete_nova_party_testimony' testimony.id %}" class="delete-button">מחיקה</a>
                            
                             {% endif %}
                 {% endif %}

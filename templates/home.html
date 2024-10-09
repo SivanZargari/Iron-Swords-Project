@@ -33,10 +33,17 @@
             color: #ffffff;
         }
         .header h1 {
-            font-size: 2.5em;
+            font-size: 3em;
+            font-weight: bold;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Adding shadow for depth */
+            margin: 0; /* Remove default margin */
+            padding: 20px; /* Add padding for spacing */
+            border-radius: 10px; /* Rounded corners */
         }
         .header h2 {
             font-size: 1.5em;
+            text-align: center;
+            border-radius: 10px; /* Rounded corners */
         }
         .header p {
             font-size: 1.2em;
@@ -53,7 +60,7 @@
             max-width: 90%; /* Responsive width to ensure it scales with the container */
             box-sizing: border-box; /* Includes padding and border in width/height calculations */
             overflow-wrap: break-word; /* Ensures long words break and don't overflow */
-            margin-left: 1100px; /* Moves the rectangle 1000 pixels to the right from its initial position */
+            margin-left: 1225px; /* Moves the rectangle 1000 pixels to the right from its initial position */
         }
         .button-container {
             display: flex;
@@ -77,6 +84,7 @@
             transition: background-color 0.3s, transform 0.3s;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* צל */
             margin-top: 10px; /* רווח עליון */
+
         }
     
         .button-container a:hover {
@@ -149,6 +157,29 @@
             color: #666;
             border-top: 1px solid #ddd;
         }
+        .footer1 {
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 10px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+        .social-share {
+            display: inline-flex;
+            justify-content: center;
+            gap: 10px; /* רווח בין האייקונים */
+        }
+        
+        .social-icon {
+            width: 35px; /* גובה האייקונים */
+            height: 35px; /* רוחב האייקונים */
+            transition: transform 0.3s; /* אפקט ריחוף */
+        }
+        
+        .social-icon:hover {
+            transform: scale(1.1); /* הגדלה קלה בריחוף */
+        }
         .stats-section {
             display: flex;
             flex-wrap: wrap;
@@ -203,7 +234,7 @@
             color: white;
             text-decoration: none;
             padding: 10px 15px;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: bold;
             border-radius: 5px;
             background-color: #white; /* צבע אחיד לכל הכפתורים */
@@ -228,7 +259,7 @@
             border-radius: 5px;
             margin-left: 10px;
             font-weight: bold;
-            font-size: 16px;
+            font-size: 18px;
         }
         /* הוספת החץ בתוך הכפתור */
         .navbar .accordion::after {
@@ -256,7 +287,7 @@
             width: 100%; /* Full width to align with the accordion button */
             position: absolute; /* Position it below the button */
             top: 100%; /* Align it below the button */
-            left: 0; /* Align it with the left edge of the button */
+            margin-left: 28%; /* Align it with the left edge of the button */
         }
         /* שינוי צבע בעת ריחוף עבור כפתור העדויות */
         .navbar .accordion:hover {
@@ -331,14 +362,21 @@
 
         <!-- Buttons Section -->
         <div class="button-container">
+
+            {% if user.is_authenticated %}
+            <a href="{% url 'join_form' %}">להוספת מידע</a>
+        {% endif %}
+
+            {% if not user.is_authenticated %}
+            <a href="{% url 'login' %}?next={% url 'add_hero' %}" style="color: white; background-color: transparent; border-radius: 5px; padding: 10px;  margin-top: 10px; ">התחברות</a>
+            {% endif %}
+
             <a href="{% url 'light_candle' %}">הדלקת נר לזכרם</a>
-            <a href="{% url 'login' %}?next={% url 'add_hero' %}" style="color: white; background-color: transparent; border-radius: 5px; padding: 10px;  margin-top: 10px; ">התחברות להוספת מידע </a>
+
         </div>
-
-
-
+        
         <div class="header">
-            <h1>היכל התהילה של גיבורי מלחמת חרבות ברזל</h1>
+            <h1>"היכל התהילה של גיבורי מלחמת "חרבות ברזל</h1>
             <h2>"וָאֶעֱבֹר עָלַיִךְ וָאֶרְאֵךְ מִתְבּוֹסֶסֶת בְּדָמָיִךְ וָאֹמַר לָךְ בְּדָמַיִךְ חֲיִי וָאֹמַר לָךְ בְּדָמַיִךְ חֲיִי"</h2>
             <p>:מלחמת 7 באוקטובר הולידה סיפורי גבורה יוצאי דופן. הנה כמה מהם</p>
         </div>
@@ -401,6 +439,25 @@
             {% endfor %}
         </div>
     </div>
+
+    <div class="footer1">
+        <div class="social-share">
+            <a href="https://www.instagram.com" target="_blank">
+                <img src="{% static 'images/instagram-icon.jpeg' %}" alt="Instagram" class="social-icon">
+            </a>
+            <a href="https://wa.me/?text={{ request.build_absolute_uri }}" target="_blank">
+                <img src="{% static 'images/whatsapp-icon.jpeg' %}" alt="WhatsApp" class="social-icon">
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank">
+                <img src="{% static 'images/facebook-icon.jpeg' %}" alt="Facebook" class="social-icon">
+            </a>
+            <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text=Check this out!" target="_blank">
+                <img src="{% static 'images/twitter-icon.png' %}" alt="Twitter" class="social-icon">
+            </a>
+        </div>
+    </div>
+    
+
     <footer class="footer">
          "כל הזכויות שמורות לאתר - "היכל התהילה של גיבורי מלחמת חרבות הברזל © 
     </footer>
