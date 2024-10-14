@@ -6,7 +6,7 @@ from .views import kibbutz_stories, add_kibbutz_story, update_kibbutz_story, del
 from .views import add_nova_party_testimony, update_testimonial, delete_nova_party_testimony
 from .views import testimonies_abductees, add_abductee_testimony, update_abductee_testimony, delete_abductee_testimony
 from .views import abductee_details
-
+from .views import edit_comment, delete_comment, light_candle
 
 
 urlpatterns = [
@@ -32,21 +32,34 @@ urlpatterns = [
     path('delete_kibbutz_story/<int:story_id>/', delete_kibbutz_story, name='delete_kibbutz_story'),
     path('update_kibbutz_story/<int:story_id>/', update_kibbutz_story, name='update_kibbutz_story'),
 
+    path('nova-party-evidence/<int:id>/', views.nova_party_evidence, name='nova_party_evidence'),
     path('nova-party-evidence/', views.nova_party_evidence, name='nova_party_evidence'),
     path('add_testimony/', add_nova_party_testimony, name='add_nova_party_testimony'),
-    path('edit_testimony/<int:pk>/', update_testimonial, name='update_testimonial'),
-    path('delete_testimony/<int:testimony_id>/', delete_nova_party_testimony, name='delete_nova_party_testimony'),
-   
+    path('testimonial/edit/<int:pk>/', views.update_testimonial, name='update_testimonial'),
+    path('delete_testimony/<int:testimony_id>/', views.delete_nova_party_testimony, name='delete_nova_party_testimony'),
+    
     path('zaka_people/', views.zaka_people, name='zaka_people'),
+    path('comment/edit/<int:comment_id>/', edit_comment, name='edit_comment'),
+    path('delete_comment/<int:comment_id>/', delete_comment, name='delete_comment'),
 
     path('testimonies-abductees/', testimonies_abductees, name='testimonies-abductees'),
     path('add-abductee-testimony/', add_abductee_testimony, name='add_abductee_testimony'),
     path('update-abductee-testimony/<int:testimony_id>/', update_abductee_testimony, name='update_abductee_testimony'),
     path('delete-abductee-testimony/<int:testimony_id>/', delete_abductee_testimony, name='delete_abductee_testimony'),
     path('abductee/<int:id>/', abductee_details, name='abductee_details'),
+    path('testimonies/', views.testimonies_abductees, name='testimonies-abductees'),
+    path('testimonies/', views.testimonies_abductees, name='testimonies_abductees'),
+   
+
 
     path('difficult-documents/', views.difficult_documents, name='difficult_documents'),
     path('difficult_documents_view/', views.difficult_documents_view, name='difficult_documents_view'),
+
+    path('about/', views.about, name='about'),
+
+    path('light-candle/', light_candle, name='light_candle'),
+    path('candle-list/', light_candle, name='candle_list'),  
+
 
     # Class-based views
     path('hero/new/', views.HeroCreateView.as_view(), name='hero-create'),

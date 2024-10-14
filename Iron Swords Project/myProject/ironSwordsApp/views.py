@@ -6,14 +6,17 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .forms import HeroForm, NovaPartyTestimonyForm, KibbutzStoryForm, TestimonialForm, AbducteeTestimonyForm
-from .models import Hero, NovaPartyTestimony, KibbutzStory, Testimonial, AbducteeTestimony
+from .forms import HeroForm, NovaPartyTestimonyForm, KibbutzStoryForm, TestimonialForm, AbducteeTestimonyForm, CommentForm
+from .models import Hero, NovaPartyTestimony, KibbutzStory, Testimonial, AbducteeTestimony, Comment
 from django.contrib.auth import get_user_model
 from django.views.generic import ListView
 from django.http import HttpResponseForbidden
 from .models import AbducteeTestimony
 from .forms import AbducteeTestimonyForm
 from django.core.exceptions import PermissionDenied
+from django.views.decorators.http import require_POST
+from .models import Candle
+from .forms import CandleForm
 
 
 User = get_user_model()
@@ -141,13 +144,18 @@ def join_form_for_hero(request):
         print("Got form data")
         form = HeroForm(request.POST, request.FILES)  # Include request.FILES to handle file uploads
         if form.is_valid():
+            print("Form is valid")
             hero = form.save(commit=False)
             hero.user = request.user
             hero.save()
+            print(f"Hero saved: {hero}")
             return redirect('hall_of_fame')  # Redirect to the appropriate page
+        else:
+            print("Form is not valid", form.errors)
     else:
         form = HeroForm()
-    return render(request, 'join_form_for_hero.html', {'form': form})
+    return render(request, 'join_form.html', {'form': form})
+
 
 
 @login_required
@@ -157,13 +165,14 @@ def edit_hero(request, hero_id):
     if request.user != hero.user and not request.user.is_staff:
         return redirect('home')  # Redirect to home or show a permission error
     if request.method == 'POST':
-        form = HeroForm(request.POST, instance=hero)
+        form = HeroForm(request.POST, request.FILES, instance=hero)  # Include request.FILES for file uploads
         if form.is_valid():
             form.save()
             return redirect('hero_detail', hero_id=hero.id)  # Redirect to the hero detail page after saving
     else:
         form = HeroForm(instance=hero)
     return render(request, 'edit_hero.html', {'form': form, 'hero': hero})
+
 
 
 @login_required
@@ -271,11 +280,14 @@ def nova_party_evidence(request):
     return render(request, 'nova_party_evidence.html', {'testimonies': testimonies})
 
 
+@login_required
 def add_nova_party_testimony(request):
     if request.method == 'POST':
         form = NovaPartyTestimonyForm(request.POST)
         if form.is_valid():
-            form.save()
+            testimony = form.save(commit=False)  # Create an instance but don’t save to the database yet
+            testimony.author = request.user  # Set the author to the current logged-in user
+            testimony.save()  # Now save the instance to the database
             return redirect('nova_party_evidence')  # Redirect to the testimonies page
     else:
         form = NovaPartyTestimonyForm()
@@ -283,39 +295,80 @@ def add_nova_party_testimony(request):
     return render(request, 'add_nova_party_testimony.html', {'form': form})
 
 
-
 @login_required
 def update_testimonial(request, pk):
-    testimonial = get_object_or_404(NovaPartyTestimony, id=pk)  # Changed to NovaPartyTestimony
-    # Check if the user is the author or an admin
+    testimonial = get_object_or_404(NovaPartyTestimony, id=pk)
     if request.user != testimonial.author and not request.user.is_superuser:
         return HttpResponseForbidden("You do not have permission to edit this testimonial.")
     if request.method == "POST":
-        form = NovaPartyTestimonyForm(request.POST, instance=testimonial)  # Changed to NovaPartyTestimonyForm
+        form = NovaPartyTestimonyForm(request.POST, instance=testimonial)
         if form.is_valid():
             form.save()
-            return redirect('nova_party_testimonies')
+            return redirect('nova_party_evidence')
     else:
-        form = NovaPartyTestimonyForm(instance=testimonial)  # Changed to NovaPartyTestimonyForm
+        form = NovaPartyTestimonyForm(instance=testimonial)
     return render(request, 'update_testimonial.html', {'form': form})
-
-
 
 
 @login_required
 def delete_nova_party_testimony(request, testimony_id):
     testimony = get_object_or_404(NovaPartyTestimony, id=testimony_id)
+    
     if request.user != testimony.author and not request.user.is_superuser:
-        return HttpResponseForbidden("You do not have permission to delete this testimonial.")
-    if request.method == "GET" and request.GET.get('confirm') == 'yes':
+        return HttpResponseForbidden("You do not have permission to delete this testimony.")
+    
+    if request.method == "POST":
         testimony.delete()
-        return redirect('nova_party_testimonies')
+        return redirect('nova_party_evidence')  
+
     return render(request, 'confirm_delete_nova_party_testimony.html', {'testimony': testimony})
 
 
+
+
 def zaka_people(request):
-    # Add any context or data retrieval here if needed
-    return render(request, 'zaka_people.html')
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user
+            comment.video_url = request.POST.get('video_url')  # Get the current video URL
+            comment.save()
+            return redirect('zaka_people')  # Redirect to the same page to show the new comment
+
+    else:
+        form = CommentForm()
+
+    comments = Comment.objects.all().order_by('-created_at')  # Fetch all comments ordered by creation date
+    context = {
+        'comment_form': form,
+        'comments': comments,
+    }
+    return render(request, 'zaka_people.html', context)
+
+@login_required
+def edit_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id, user=request.user)
+    
+    if request.method == 'POST':
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            form.save()
+            return redirect('zaka_people')  # Adjust to your URL name
+    else:
+        form = CommentForm(instance=comment)
+    
+    return render(request, 'edit_comment.html', {'form': form})
+
+@login_required
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id, user=request.user)
+    
+    if request.method == 'POST':
+        comment.delete()
+        return redirect('zaka_people')  # Adjust to your URL name
+    
+    return render(request, 'confirm_delete_zaka.html', {'comment': comment})
 
 
 def testimonies_abductees(request):
@@ -325,14 +378,15 @@ def testimonies_abductees(request):
 @login_required
 def add_abductee_testimony(request):
     if request.method == 'POST':
-        form = AbducteeTestimonyForm(request.POST)
+        form = AbducteeTestimonyForm(request.POST, request.FILES)  # Ensure request.FILES is used
         if form.is_valid():
             AbducteeTestimony.objects.create(
                 owner=form.cleaned_data['owner'],
                 story=form.cleaned_data['story'],
                 author=request.user,
                 age=form.cleaned_data['age'],
-                date_of_return=form.cleaned_data['date_of_return']
+                date_of_return=form.cleaned_data['date_of_return'],
+                image=form.cleaned_data['image']
             )
             return redirect('testimonies-abductees')
     else:
@@ -344,7 +398,8 @@ def update_abductee_testimony(request, testimony_id):
     testimony = get_object_or_404(AbducteeTestimony, pk=testimony_id)
     
     if request.method == 'POST':
-        form = AbducteeTestimonyForm(request.POST, instance=testimony)
+        # Pass request.FILES to handle file uploads
+        form = AbducteeTestimonyForm(request.POST, request.FILES, instance=testimony)
         if form.is_valid():
             form.save()
             return redirect('testimonies-abductees')
@@ -375,3 +430,18 @@ def difficult_documents(request):
 
 def difficult_documents_view(request):
     return render(request, 'difficult_documents_view.html')
+
+def about(request):
+    return render(request, 'about.html')
+
+def light_candle(request):
+    if request.method == 'POST':
+        form = CandleForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('candle_list')  # Make sure 'candle_list' is defined in your URLs
+    else:
+        form = CandleForm()
+
+    candles = Candle.objects.all().order_by('-date_lit')
+    return render(request, 'light_candle.html', {'form': form, 'candles': candles})
